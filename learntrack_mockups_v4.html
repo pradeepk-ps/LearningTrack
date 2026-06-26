@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LearnTrack — UI Mockups v4 | Pradeep Kamma</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+:root{--bg:#090E1A;--bg2:#0D1526;--bg3:#111D35;--border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.13);--cyan:#00C8FF;--cyan2:#0EA5E9;--purple:#7C5CFA;--green:#10B981;--amber:#F59E0B;--red:#EF4444;--text:#E2E8F0;--muted:#64748B;--muted2:#94A3B8;--card:#111827;--nav-h:56px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;overflow:hidden;}
+.screen{display:none;width:100vw;height:100vh;overflow-y:auto;overflow-x:hidden;}
+.screen.active{display:flex;flex-direction:column;}
+
+/* NAV */
+.pres-nav{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:3px;background:rgba(9,14,26,.97);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 12px;backdrop-filter:blur(24px);z-index:9999;box-shadow:0 8px 40px rgba(0,0,0,.7);flex-wrap:nowrap;}
+.pn-btn{padding:4px 10px;border-radius:999px;font-size:10.5px;font-weight:600;cursor:pointer;border:1px solid transparent;background:none;color:var(--muted2);transition:all .15s;white-space:nowrap;}
+.pn-btn:hover{border-color:var(--cyan);color:var(--cyan);}
+.pn-btn.active{background:rgba(0,200,255,.14);border-color:var(--cyan);color:var(--cyan);}
+.pn-btn.active-m{background:rgba(124,92,250,.14);border-color:var(--purple);color:var(--purple);}
+.pn-sep{width:1px;height:13px;background:rgba(255,255,255,.12);margin:0 3px;flex-shrink:0;}
+.pn-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:0 3px;}
+
+/* COVER */
+.cover{background:radial-gradient(ellipse 100% 80% at 50% -10%,#0A2050 0%,var(--bg) 65%);align-items:center;justify-content:center;text-align:center;padding:50px 24px 110px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(circle 500px at 10% 60%,rgba(0,200,255,.06),transparent),radial-gradient(circle 500px at 90% 40%,rgba(124,92,250,.06),transparent);pointer-events:none;}
+.c-logo{width:80px;height:80px;border-radius:22px;background:linear-gradient(135deg,#1E90FF,#00C8FF);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 22px;box-shadow:0 0 60px rgba(0,200,255,.35);}
+.c-eye{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;font-family:'Space Grotesk',sans-serif;}
+.c-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,7vw,66px);font-weight:800;letter-spacing:-.03em;color:#fff;line-height:1.05;margin-bottom:6px;}
+.c-title em{color:var(--cyan);font-style:normal;}
+.c-sub{font-size:15px;color:var(--cyan);font-weight:500;letter-spacing:.06em;margin-bottom:10px;}
+.c-desc-block{max-width:620px;margin:0 auto 28px;}
+.c-desc-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px;}
+.c-desc{font-size:13px;color:var(--muted2);line-height:1.7;}
+.c-bar{width:52px;height:3px;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:2px;margin:0 auto 28px;}
+.c-chips{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-bottom:36px;}
+.chip{display:flex;align-items:center;gap:7px;padding:6px 15px;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:999px;font-size:12px;color:var(--muted2);}
+.cd{width:7px;height:7px;border-radius:50%;}
+.author-card{display:inline-flex;align-items:center;gap:14px;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:16px;padding:14px 24px;margin-bottom:26px;}
+.av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:16px;color:#fff;flex-shrink:0;}
+.av-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#fff;text-align:left;}
+.av-role{font-size:11px;color:var(--muted2);text-align:left;}
+.c-btn{display:inline-flex;align-items:center;gap:8px;padding:13px 30px;background:linear-gradient(135deg,var(--cyan2),var(--cyan));color:#fff;font-weight:700;font-size:14px;border-radius:12px;border:none;cursor:pointer;box-shadow:0 0 30px rgba(0,200,255,.3);}
+
+/* APP SHELL */
+.app-shell{flex-direction:row !important;}
+.sidebar{width:214px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh;position:sticky;top:0;}
+.s-logo{display:flex;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--border);}
+.s-li{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#1E90FF,#00C8FF);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.s-lt{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:800;color:#fff;}
+.s-ls{font-size:10px;color:var(--muted);}
+.s-sec{padding:14px 16px 4px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.s-nav{padding:4px 8px;display:flex;flex-direction:column;gap:1px;}
+.sn{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:8px;color:var(--muted2);font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:all .15s;}
+.sn:hover{background:rgba(255,255,255,.05);color:var(--text);}
+.sn.act-e{background:rgba(0,200,255,.1);color:var(--cyan);}
+.sn.act-m{background:rgba(124,92,250,.1);color:var(--purple);}
+.s-user{margin-top:auto;border-top:1px solid var(--border);padding:12px 14px;display:flex;align-items:center;gap:9px;}
+.u-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;}
+.u-nm{font-size:12px;font-weight:600;color:var(--text);}
+.u-rl{font-size:10px;color:var(--muted);}
+.u-out{margin-left:auto;font-size:11px;padding:3px 8px;border-radius:6px;border:1px solid var(--border);background:none;color:var(--muted2);cursor:pointer;}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.topbar{height:var(--nav-h);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:var(--bg2);flex-shrink:0;}
+.tb-t{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#fff;}
+.tb-r{display:flex;align-items:center;gap:11px;}
+.tb-badge{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:5px;}
+.tb-e{background:rgba(0,200,255,.1);color:var(--cyan);border:1px solid rgba(0,200,255,.2);}
+.tb-m{background:rgba(124,92,250,.1);color:var(--purple);border:1px solid rgba(124,92,250,.2);}
+.page-inner{padding:24px;overflow-y:auto;flex:1;}
+.ph{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:3px;}
+.ps{font-size:12px;color:var(--muted2);margin-bottom:20px;}
+
+/* SUB-TABS */
+.stabs{display:flex;gap:2px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:9px;padding:3px;margin-bottom:18px;}
+.stab{flex:1;padding:7px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:none;background:none;color:var(--muted2);text-align:center;transition:all .15s;}
+.stab.act-e{background:rgba(0,200,255,.12);color:var(--cyan);}
+.stab.act-m{background:rgba(124,92,250,.12);color:var(--purple);}
+
+/* STATS */
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px;margin-bottom:20px;}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:16px;display:flex;align-items:flex-start;justify-content:space-between;}
+.sv{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:800;color:#fff;line-height:1;}
+.sl{font-size:11px;color:var(--muted2);margin-top:3px;}
+.si{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.ig{background:rgba(16,185,129,.15);}.ic{background:rgba(0,200,255,.15);}.ia{background:rgba(245,158,11,.15);}.ip{background:rgba(124,92,250,.15);}.ir{background:rgba(239,68,68,.15);}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:18px;margin-bottom:16px;}
+.ct{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:7px;}
+
+/* LEVEL CARDS */
+.lg{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-bottom:20px;}
+.lc{background:var(--card);border:1px solid var(--border);border-radius:13px;overflow:hidden;}
+.lct{padding:16px;display:flex;align-items:flex-start;justify-content:space-between;}
+.lbadge{border-radius:11px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:800;color:#fff;}
+.lb1{background:linear-gradient(135deg,#06B6D4,#22D3EE);}
+.lb2{background:linear-gradient(135deg,#7C3AED,#A855F7);}
+.lb3{background:linear-gradient(135deg,#D97706,#FBBF24);}
+.ln{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:1px;}
+.ld{font-size:11px;color:var(--muted2);}
+.lcb{padding:0 16px 16px;}
+.lpr{display:flex;justify-content:space-between;font-size:11px;color:var(--muted2);margin-bottom:5px;}
+.lbw{height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;margin-bottom:11px;}
+.lbi{height:100%;border-radius:3px;}
+.bc{background:linear-gradient(90deg,#06B6D4,#00C8FF);}
+.bp{background:linear-gradient(90deg,#7C3AED,#A855F7);}
+.ba{background:linear-gradient(90deg,#D97706,#FBBF24);}
+.ghl{display:flex;align-items:center;gap:5px;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:7px 11px;font-size:11px;color:var(--cyan);text-decoration:none;margin-bottom:10px;}
+
+/* STATUS BADGES */
+.b{display:inline-flex;align-items:center;padding:3px 8px;border-radius:5px;font-size:10px;font-weight:700;letter-spacing:.02em;}
+.b-ok{background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.25);}
+.b-ip{background:rgba(0,200,255,.12);color:var(--cyan);border:1px solid rgba(0,200,255,.2);}
+.b-en{background:rgba(124,92,250,.12);color:var(--purple);border:1px solid rgba(124,92,250,.2);}
+.b-pd{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.2);}
+.b-rw{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.2);}
+.b-ne{background:rgba(255,255,255,.05);color:var(--muted2);border:1px solid var(--border);}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .15s;}
+.btn-f{width:100%;}
+.btn-p{background:linear-gradient(135deg,var(--cyan2),var(--cyan));color:#fff;}
+.btn-pm{background:linear-gradient(135deg,#5B21B6,var(--purple));color:#fff;}
+.btn-o{background:transparent;border:1px solid var(--border2);color:var(--text);}
+.btn-g{background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.25);}
+.btn-r{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.25);}
+
+/* FORM FIELDS */
+.fi{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:9px 13px;font-size:12px;color:var(--text);margin-bottom:11px;font-family:'Inter',sans-serif;}
+.fi::placeholder{color:var(--muted);}
+.fbtx{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:9px 13px;font-size:11px;color:var(--text);resize:vertical;min-height:62px;margin-bottom:10px;font-family:'Inter',sans-serif;}
+.fbtx::placeholder{color:var(--muted);}
+.fl{font-size:11px;font-weight:600;color:var(--muted2);margin-bottom:5px;display:block;}
+
+/* SUBMISSION BLOCKS */
+.subc{background:var(--card);border:1px solid var(--border);border-radius:11px;overflow:hidden;margin-bottom:14px;}
+.subh{padding:14px 18px;border-bottom:1px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:space-between;}
+.subb{padding:18px;}
+.ghr{display:flex;align-items:center;gap:7px;background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:8px 11px;font-size:11px;color:var(--cyan);margin-bottom:12px;}
+.rfb{font-size:11px;color:var(--muted2);background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:9px;line-height:1.5;}
+.ahr{display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid var(--border);}
+.ahr:last-child{border-bottom:none;}
+
+/* QUEUE CARDS */
+.qc{background:var(--card);border:1px solid var(--border);border-radius:11px;overflow:hidden;margin-bottom:11px;}
+.qch{padding:14px 16px;border-bottom:1px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:space-between;}
+.qcb{padding:14px 16px;}
+.qmeta{font-size:10px;color:var(--muted2);display:flex;gap:14px;margin-bottom:10px;flex-wrap:wrap;}
+
+/* ACTIVITY */
+.ul{display:flex;flex-direction:column;}
+.ur{display:flex;align-items:flex-start;gap:11px;padding:11px 0;border-bottom:1px solid var(--border);}
+.ur:last-child{border-bottom:none;}
+.ura{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.urn{font-size:12px;font-weight:600;color:#fff;}
+.urs{font-size:10px;color:var(--muted2);}
+.urt{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* PROGRESS BARS */
+.prog-sec{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:18px;margin-bottom:16px;}
+.pr{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.pr:last-child{border-bottom:none;}
+.prl{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:11px;color:#fff;flex-shrink:0;}
+.prn{font-size:12px;font-weight:600;color:var(--text);flex-shrink:0;width:130px;}
+.prb{flex:1;height:6px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;}
+.prbi{height:100%;border-radius:3px;}
+.prp{font-size:11px;color:var(--muted2);width:34px;text-align:right;flex-shrink:0;}
+
+/* TABLE */
+.tw{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+th{background:var(--bg3);padding:9px 13px;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;border-bottom:1px solid var(--border);}
+td{padding:11px 13px;font-size:12px;border-bottom:1px solid var(--border);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,.015);}
+.td-n{display:flex;align-items:center;gap:9px;}
+.tav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;}
+.tem{font-size:10px;color:var(--muted2);}
+
+/* REPORTS */
+.repg{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;}
+.cha{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:18px;}
+.bch{display:flex;align-items:flex-end;gap:10px;height:150px;padding-top:14px;}
+.bg2{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;}
+.bc2{width:26px;border-radius:3px 3px 0 0;}
+.bl{font-size:10px;color:var(--muted2);}
+.cleg{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;}
+.cli{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted2);}
+.cld{width:7px;height:7px;border-radius:2px;}
+.detc{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:18px;}
+.dlev{margin-bottom:14px;}
+.dlh{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;}
+.dln{font-size:12px;font-weight:600;color:#fff;}
+.dlr{display:flex;align-items:center;gap:7px;margin-bottom:5px;}
+.dll{font-size:11px;color:var(--muted2);width:90px;}
+.dlbw{flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;}
+.dlb{height:100%;border-radius:2px;}
+.divl{height:1px;background:var(--border);margin:12px 0;}
+
+/* FLOW */
+.flow-pg{background:var(--bg2);}
+.flow-body{padding:22px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;flex:1;padding-bottom:80px;}
+.fn{background:var(--bg3);border:1px solid var(--border2);border-radius:9px;padding:13px;}
+.fnt{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#fff;margin-bottom:7px;}
+.fb{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.fb li{font-size:11px;color:var(--muted2);display:flex;align-items:flex-start;gap:5px;}
+.fb li::before{content:'•';color:var(--cyan);flex-shrink:0;}
+.fb.fbm li::before{color:var(--purple);}
+.fcols{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fc{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:16px;}
+.lcs{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:16px;}
+.lcr{display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-bottom:7px;}
+.lcp{padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;}
+.arr{font-size:10px;color:var(--muted);}
+.adn{text-align:center;font-size:16px;color:var(--muted);margin:2px 0;}
+
+/* LOGIN */
+.login-page{flex-direction:row !important;}
+.ll{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;border-right:1px solid var(--border);background:radial-gradient(ellipse 80% 100% at 30% 50%,rgba(0,200,255,.04),transparent);}
+.lr{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;}
+.ll-logo{width:56px;height:56px;border-radius:15px;background:linear-gradient(135deg,#1E90FF,#00C8FF);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px;box-shadow:0 0 36px rgba(0,200,255,.3);}
+.ll-t{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:800;color:#fff;margin-bottom:3px;}
+.ll-s{font-size:11px;color:var(--muted2);margin-bottom:20px;text-align:center;}
+.ll-desc{font-size:12px;color:var(--muted2);text-align:center;max-width:280px;line-height:1.7;margin-bottom:22px;}
+.ll-fg{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:300px;}
+.ll-f{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:9px;padding:10px;}
+.ll-ft{font-size:11px;font-weight:600;color:var(--cyan);margin-bottom:1px;}
+.ll-fs{font-size:10px;color:var(--muted2);}
+.role-tabs{display:flex;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:10px;padding:4px;margin-bottom:22px;width:100%;max-width:360px;}
+.role-tab{flex:1;padding:9px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:none;background:none;color:var(--muted2);text-align:center;transition:all .15s;}
+.role-tab.act-e{background:rgba(0,200,255,.15);color:var(--cyan);}
+.role-tab.act-m{background:rgba(124,92,250,.15);color:var(--purple);}
+.lr-form{width:100%;max-width:360px;}
+.lr-w{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:3px;}
+.lr-ws{font-size:11px;color:var(--muted2);margin-bottom:20px;}
+.bsi-e{width:100%;padding:11px;border-radius:9px;background:linear-gradient(135deg,var(--cyan2),var(--cyan));color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer;margin-top:4px;}
+.bsi-m{width:100%;padding:11px;border-radius:9px;background:linear-gradient(135deg,#5B21B6,var(--purple));color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer;margin-top:4px;}
+.lrf{text-align:center;font-size:11px;color:var(--muted2);margin-top:14px;}
+.lrf a{color:var(--cyan);text-decoration:none;}
+
+/* MANAGER SELECT */
+.msel{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:9px 13px;font-size:12px;color:var(--text);margin-bottom:11px;font-family:'Inter',sans-serif;}
+</style>
+</head>
+<body>
+
+<!-- BOTTOM NAV -->
+<div class="pres-nav">
+  <button class="pn-btn" onclick="go('cover')">Cover</button>
+  <div class="pn-sep"></div>
+  <button class="pn-btn" onclick="go('login')">Login</button>
+  <div class="pn-sep"></div>
+  <span class="pn-label">Employee</span>
+  <button class="pn-btn" onclick="go('edash')">Dashboard</button>
+  <button class="pn-btn" onclick="go('elevels')">My Levels</button>
+  <button class="pn-btn" onclick="go('esubs')">Submissions</button>
+  <button class="pn-btn" onclick="go('eflow')">Flow</button>
+  <div class="pn-sep"></div>
+  <span class="pn-label">Manager</span>
+  <button class="pn-btn" onclick="go('mdash')">Dashboard</button>
+  <button class="pn-btn" onclick="go('mrevs')">Reviews</button>
+  <button class="pn-btn" onclick="go('memps')">Employees</button>
+  <button class="pn-btn" onclick="go('mrep')">Reports</button>
+  <button class="pn-btn" onclick="go('mflow')">Flow</button>
+</div>
+
+<!-- ═══════════ COVER ═══════════ -->
+<div id="s-cover" class="screen cover">
+  <div class="c-logo">🎓</div>
+  <div class="c-eye">ProductSquads</div>
+  <h1 class="c-title">Learn<em>Track</em></h1>
+  <p class="c-sub">Track. Review. Grow.</p>
+  <div class="c-bar"></div>
+  <div class="c-desc-block">
+    <div class="c-desc-title">Learning Progress Tracking &amp; Review Management System</div>
+    <p class="c-desc">LearnTrack is a centralized platform designed to manage employee level progress, project submissions, manager reviews, feedback history, and level completion tracking for L1, L2, and L3 learning programs within ProductSquads.</p>
+  </div>
+  <div class="c-chips">
+    <span class="chip"><span class="cd" style="background:var(--cyan);"></span>14 Screens</span>
+    <span class="chip"><span class="cd" style="background:var(--purple);"></span>Employee &amp; Manager Portals</span>
+    <span class="chip"><span class="cd" style="background:var(--green);"></span>React · FastAPI · MongoDB</span>
+    <span class="chip"><span class="cd" style="background:var(--amber);"></span>JWT Auth</span>
+  </div>
+  <div class="author-card">
+    <div class="av">PK</div>
+    <div><div class="av-name">Pradeep Kamma</div><div class="av-role">UI/UX Design · LearnTrack — ProductSquads</div></div>
+  </div>
+  <button class="c-btn" onclick="go('login')">View Mockups →</button>
+</div>
+
+<!-- ═══════════ LOGIN ═══════════ -->
+<div id="s-login" class="screen login-page">
+  <div class="ll">
+    <div class="ll-logo">🎓</div>
+    <div class="ll-t">LearnTrack</div>
+    <div class="ll-s">ProductSquads</div>
+    <div style="width:38px;height:3px;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:2px;margin-bottom:18px;"></div>
+    <p class="ll-desc">Track level progress, submit projects, receive manager feedback, and grow through L1, L2, and L3 learning programs.</p>
+    <div class="ll-fg">
+      <div class="ll-f"><div class="ll-ft">L1</div><div class="ll-fs">Foundation</div></div>
+      <div class="ll-f"><div class="ll-ft">L2</div><div class="ll-fs">Intermediate</div></div>
+      <div class="ll-f"><div class="ll-ft">L3</div><div class="ll-fs">Advanced</div></div>
+      <div class="ll-f"><div class="ll-ft" style="color:var(--purple);">Reviews</div><div class="ll-fs">Management</div></div>
+    </div>
+  </div>
+  <div class="lr">
+    <div class="role-tabs">
+      <button class="role-tab act-e" id="tab-emp" onclick="switchRole('emp')">🎓 Employee</button>
+      <button class="role-tab" id="tab-mgr" onclick="switchRole('mgr')">👔 Manager</button>
+    </div>
+    <div class="lr-form">
+      <div class="lr-w" id="login-title">Welcome back</div>
+      <div class="lr-ws" id="login-sub">Sign in as an Employee to track your level progress</div>
+      <label class="fl">Email Address</label>
+      <input class="fi" style="margin-bottom:13px;" placeholder="john.doe@company.com" type="email"/>
+      <label class="fl">Password</label>
+      <input class="fi" style="margin-bottom:13px;" placeholder="••••••••••" type="password"/>
+      <button class="bsi-e" id="login-btn" onclick="go('edash')">Sign In as Employee →</button>
+      <div class="lrf">Don't have an account? <a href="#" onclick="return false;">Register</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ EMPLOYEE DASHBOARD ═══════════ -->
+<div id="s-edash" class="screen app-shell">
+  <aside class="sidebar">
+    <div class="s-logo"><div class="s-li">🎓</div><div><div class="s-lt">LearnTrack</div><div class="s-ls">ProductSquads</div></div></div>
+    <div class="s-sec">Employee</div>
+    <div class="s-nav">
+      <button class="sn act-e" onclick="go('edash')"><span>📊</span>Dashboard</button>
+      <button class="sn" onclick="go('elevels')"><span>🎓</span>My Levels</button>
+      <button class="sn" onclick="go('esubs')"><span>📁</span>Submissions</button>
+    </div>
+    <div class="s-user"><div class="u-av" style="background:linear-gradient(135deg,var(--cyan),var(--purple));">JD</div><div><div class="u-nm">John Doe</div><div class="u-rl">Employee · EMP001</div></div><button class="u-out" onclick="go('login')">↩</button></div>
+  </aside>
+  <div class="main">
+    <div class="topbar"><div class="tb-t">Dashboard</div><div class="tb-r"><span class="tb-badge tb-e">Employee</span></div></div>
+    <div class="page-inner">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">
+        <div><div class="ph">Welcome back, John! 👋</div><div style="font-size:12px;color:var(--muted2);">Track your level progress and manage your submissions</div></div>
+        <button class="btn btn-p" onclick="go('esubs')">+ Submit Project</button>
+      </div>
+      <div class="sg">
+        <div class="sc"><div><div class="sl">Levels Completed</div><div class="sv">1</div></div><div class="si ig">✅</div></div>
+        <div class="sc"><div><div class="sl">Current Level</div><div class="sv">L2</div></div><div class="si ic">📈</div></div>
+        <div class="sc"><div><div class="sl">Review Pending</div><div class="sv">1</div></div><div class="si ia">🕐</div></div>
+        <div class="sc"><div><div class="sl">Rework Required</div><div class="sv">0</div></div><div class="si ir">↩</div></div>
+      </div>
+      <div class="prog-sec">
+        <div class="ct">📈 Level Progress</div>
+        <div class="pr"><div class="prl lb1" style="width:32px;height:32px;font-size:11px;">L1</div><div class="prn">Foundation</div><div class="prb"><div class="prbi bc" style="width:100%;"></div></div><div class="prp">100%</div><span class="b b-ok">Completed</span></div>
+        <div class="pr"><div class="prl lb2" style="width:32px;height:32px;font-size:11px;">L2</div><div class="prn">Intermediate</div><div class="prb"><div class="prbi bp" style="width:70%;"></div></div><div class="prp">70%</div><span class="b b-pd">Review Pending</span></div>
+        <div class="pr"><div class="prl lb3" style="width:32px;height:32px;font-size:11px;">L3</div><div class="prn">Advanced</div><div class="prb"><div class="prbi ba" style="width:0%;"></div></div><div class="prp">0%</div><span class="b b-ne">Not Enrolled</span></div>
+      </div>
+      <div class="card">
+        <div class="ct">🔔 Recent Activity</div>
+        <div class="ul">
+          <div class="ur"><div class="ura ia">🕐</div><div style="flex:1;"><div class="urn">L2 review request submitted</div><div class="urs">Waiting for review from Manager: Rajesh Kumar</div><div class="urt">2 hours ago</div></div><span class="b b-pd">Review Pending</span></div>
+          <div class="ur"><div class="ura ig">✅</div><div style="flex:1;"><div class="urn">L1 level completed</div><div class="urs">Reviewed by Ravi Kumar · Great foundation work!</div><div class="urt">3 days ago</div></div><span class="b b-ok">Completed</span></div>
+          <div class="ur"><div class="ura ic">🎓</div><div style="flex:1;"><div class="urn">Enrolled in L2 — Intermediate</div><div class="urs">Started your intermediate level journey</div><div class="urt">5 days ago</div></div><span class="b b-en">Enrolled</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ MY LEVELS ═══════════ -->
+<div id="s-elevels" class="screen app-shell">
+  <aside class="sidebar">
+    <div class="s-logo"><div class="s-li">🎓</div><div><div class="s-lt">LearnTrack</div><div class="s-ls">ProductSquads</div></div></div>
+    <div class="s-sec">Employee</div>
+    <div class="s-nav">
+      <button class="sn" onclick="go('edash')"><span>📊</span>Dashboard</button>
+      <button class="sn act-e" onclick="go('elevels')"><span>🎓</span>My Levels</button>
+      <button class="sn" onclick="go('esubs')"><span>📁</span>Submissions</button>
+    </div>
+    <div class="s-user"><div class="u-av" style="background:linear-gradient(135deg,var(--cyan),var(--purple));">JD</div><div><div class="u-nm">John Doe</div><div class="u-rl">Employee · EMP001</div></div><button class="u-out" onclick="go('login')">↩</button></div>
+  </aside>
+  <div class="main">
+    <div class="topbar"><div class="tb-t">My Levels</div><div class="tb-r"><span class="tb-badge tb-e">Employee</span></div></div>
+    <div class="page-inner">
+      <div class="ph">My Levels</div>
+      <div class="ps">Your L1 → L2 → L3 journey — each level unlocks after the previous is completed</div>
+      <div class="lg">
+        <div class="lc" style="border-color:rgba(6,182,212,.3);">
+          <div class="lct"><div class="lbadge lb1" style="width:42px;height:42px;font-size:14px;">L1</div><span class="b b-ok">Completed</span></div>
+          <div style="padding:0 16px 5px;"><div class="ln">Foundation Level</div><div class="ld">Core concepts and fundamentals</div></div>
+          <div style="padding:0 16px 5px;font-size:10px;color:var(--muted);">Enrolled 15 Mar · Completed 20 Jun 2024</div>
+          <div class="lcb">
+            <div class="lpr"><span>Progress</span><span>100%</span></div>
+            <div class="lbw"><div class="lbi bc" style="width:100%;"></div></div>
+            <a href="#" class="ghl" onclick="return false;">🔗 github.com/johndoe/l1-project ↗</a>
+            <div style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:7px;padding:9px 11px;">
+              <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:3px;">✅ Approved by Ravi Kumar · 20 Jun 2024</div>
+              <div style="font-size:11px;color:var(--muted2);">Great foundation work! Clean code and solid understanding of core concepts.</div>
+            </div>
+          </div>
+        </div>
+        <div class="lc" style="border-color:rgba(245,158,11,.3);">
+          <div class="lct"><div class="lbadge lb2" style="width:42px;height:42px;font-size:14px;">L2</div><span class="b b-pd">Review Pending</span></div>
+          <div style="padding:0 16px 5px;"><div class="ln">Intermediate Level</div><div class="ld">Advanced concepts and implementation patterns</div></div>
+          <div style="padding:0 16px 5px;font-size:10px;color:var(--muted);">Enrolled 1 Apr 2024</div>
+          <div class="lcb">
+            <div class="lpr"><span>Progress</span><span>70%</span></div>
+            <div class="lbw"><div class="lbi bp" style="width:70%;"></div></div>
+            <a href="#" class="ghl" onclick="return false;">🔗 github.com/johndoe/l2-project ↗</a>
+            <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:7px;padding:9px 11px;font-size:11px;color:var(--amber);">
+              🕐 Review request #1 submitted · Waiting for review from Manager: Rajesh Kumar
+            </div>
+          </div>
+        </div>
+        <div class="lc" style="opacity:.5;">
+          <div class="lct"><div class="lbadge lb3" style="width:42px;height:42px;font-size:14px;">L3</div><span class="b b-ne">Locked</span></div>
+          <div style="padding:0 16px 5px;"><div class="ln">Advanced Level</div><div class="ld">Expert mastery and leadership skills</div></div>
+          <div style="padding:0 16px 5px;font-size:10px;color:var(--muted);">Unlocks after L2 is completed</div>
+          <div class="lcb">
+            <div class="lpr"><span>Progress</span><span>—</span></div>
+            <div class="lbw"><div class="lbi ba" style="width:0%;"></div></div>
+            <button class="btn btn-o btn-f" disabled style="cursor:not-allowed;opacity:.5;">🔒 Complete L2 to Unlock</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SUBMISSIONS (3 sub-tabs) ═══════════ -->
+<div id="s-esubs" class="screen app-shell">
+  <aside class="sidebar">
+    <div class="s-logo"><div class="s-li">🎓</div><div><div class="s-lt">LearnTrack</div><div class="s-ls">ProductSquads</div></div></div>
+    <div class="s-sec">Employee</div>
+    <div class="s-nav">
+      <button class="sn" onclick="go('edash')"><span>📊</span>Dashboard</button>
+      <button class="sn" onclick="go('elevels')"><span>🎓</span>My Levels</button>
+      <button class="sn act-e" onclick="go('esubs')"><span>📁</span>Submissions</button>
+    </div>
+    <div class="s-user"><div class="u-av" style="background:linear-gradient(135deg,var(--cyan),var(--purple));">JD</div><div><div class="u-nm">John Doe</div><div class="u-rl">Employee · EMP001</div></div><button class="u-out" onclick="go('login')">↩</button></div>
+  </aside>
+  <div class="main">
+    <div class="topbar"><div class="tb-t">Submissions</div><div class="tb-r"><span class="tb-badge tb-e">Employee</span></div></div>
+    <div class="page-inner">
+      <div class="ph">Submissions</div>
+      <div class="ps">Submit projects · Track review status · View all feedback history</div>
+      <div class="stabs">
+        <button class="stab act-e" id="stab1" onclick="showSubTab(1)">📤 Project Submission</button>
+        <button class="stab" id="stab2" onclick="showSubTab(2)">📋 Submission History</button>
+        <button class="stab" id="stab3" onclick="showSubTab(3)">💬 Feedback History</button>
+      </div>
+
+      <!-- SUB-TAB 1: PROJECT SUBMISSION -->
+      <div id="subtab1">
+        <div class="subc">
+          <div class="subh">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div class="lbadge lb2" style="width:34px;height:34px;font-size:11px;">L2</div>
+              <div><div style="font-size:13px;font-weight:600;color:#fff;">Submit L2 Project</div><div style="font-size:10px;color:var(--muted2);">Intermediate Level · Submission v1</div></div>
+            </div>
+            <span class="b b-ip">In Progress</span>
+          </div>
+          <div class="subb">
+            <label class="fl">Project Title</label>
+            <input class="fi" placeholder="e.g. Employee Leave Management System"/>
+            <label class="fl">Project Description</label>
+            <textarea class="fbtx" placeholder="Brief description of what you built and the technologies used…"></textarea>
+            <label class="fl">GitHub Repository URL</label>
+            <input class="fi" placeholder="https://github.com/johndoe/l2-project"/>
+            <label class="fl">Manager Name <span style="color:var(--muted);font-weight:400;">(who will review your project)</span></label>
+            <select class="msel">
+              <option value="">Select your manager…</option>
+              <option value="rajesh">Rajesh Kumar</option>
+              <option value="priya">Priya Sharma</option>
+              <option value="ravi">Ravi Kumar</option>
+              <option value="anil">Anil Reddy</option>
+            </select>
+            <div style="background:rgba(0,200,255,.06);border:1px solid rgba(0,200,255,.15);border-radius:7px;padding:9px 11px;font-size:11px;color:var(--muted2);margin-bottom:14px;">
+              ℹ️ The selected manager will be notified of your review request directly. This maps to <code style="color:var(--cyan);background:rgba(0,200,255,.08);padding:1px 5px;border-radius:4px;">review_requests.reviewer_id</code>
+            </div>
+            <button class="btn btn-p btn-f" style="padding:11px;">Submit Project for Review →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUB-TAB 2: SUBMISSION HISTORY -->
+      <div id="subtab2" style="display:none;">
+        <div class="subc" style="border-color:rgba(245,158,11,.2);">
+          <div class="subh">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div class="lbadge lb2" style="width:34px;height:34px;font-size:11px;">L2</div>
+              <div><div style="font-size:13px;font-weight:600;color:#fff;">Intermediate Level · Submission v1</div><div style="font-size:10px;color:var(--muted2);">Submitted 24 Jun 2024 · Manager: Rajesh Kumar</div></div>
+            </div>
+            <span class="b b-pd">Review Pending</span>
+          </div>
+          <div class="subb">
+            <div class="ghr">🔗 github.com/johndoe/l2-advanced-project</div>
+            <div style="font-size:11px;font-weight:600;color:var(--muted2);margin-bottom:8px;">Review Attempts</div>
+            <div class="ahr"><span class="b b-pd">Pending</span><span style="font-size:11px;color:var(--text);">Attempt #1</span><span style="font-size:10px;color:var(--muted2);">Submitted 24 Jun</span><span style="margin-left:auto;font-size:10px;color:var(--amber);">Waiting for review from Manager: Rajesh Kumar</span></div>
+          </div>
+        </div>
+        <div class="subc" style="border-color:rgba(16,185,129,.2);">
+          <div class="subh">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div class="lbadge lb1" style="width:34px;height:34px;font-size:11px;">L1</div>
+              <div><div style="font-size:13px;font-weight:600;color:#fff;">Foundation Level · Submission v2</div><div style="font-size:10px;color:var(--muted2);">Completed 20 Jun 2024 · Manager: Ravi Kumar</div></div>
+            </div>
+            <span class="b b-ok">Completed</span>
+          </div>
+          <div class="subb">
+            <div class="ghr">🔗 github.com/johndoe/l1-foundations-v2</div>
+            <div style="font-size:11px;font-weight:600;color:var(--muted2);margin-bottom:8px;">Review Attempts</div>
+            <div class="ahr"><span class="b b-rw">Rework</span><span style="font-size:11px;color:var(--text);">Attempt #1</span><span style="font-size:10px;color:var(--muted2);">10 Jun</span><span style="margin-left:auto;font-size:10px;color:var(--red);">Rework requested by Ravi Kumar</span></div>
+            <div class="ahr"><span class="b b-ok">Approved</span><span style="font-size:11px;color:var(--text);">Attempt #2</span><span style="font-size:10px;color:var(--muted2);">20 Jun</span><span style="margin-left:auto;font-size:10px;color:var(--green);">Approved by Ravi Kumar</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUB-TAB 3: FEEDBACK HISTORY -->
+      <div id="subtab3" style="display:none;">
+        <div class="card" style="border-color:rgba(239,68,68,.15);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div class="lbadge lb1" style="width:30px;height:30px;font-size:10px;">L1</div>
+              <div><div style="font-size:12px;font-weight:600;color:#fff;">Foundation Level — Attempt #1</div><div style="font-size:10px;color:var(--muted2);">Reviewed by Ravi Kumar · 10 Jun 2024</div></div>
+            </div>
+            <span class="b b-rw">Rework Required</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+            <div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.15);border-radius:7px;padding:9px;">
+              <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:4px;">👍 Strengths</div>
+              <div style="font-size:11px;color:var(--muted2);">Clean code structure, good commit history, well-named variables</div>
+            </div>
+            <div style="background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.15);border-radius:7px;padding:9px;">
+              <div style="font-size:10px;font-weight:700;color:var(--red);margin-bottom:4px;">🔧 Improvements</div>
+              <div style="font-size:11px;color:var(--muted2);">Add error handling, write unit tests, improve README documentation</div>
+            </div>
+          </div>
+          <div class="rfb">💬 Overall: Please add proper error handling in the API layer and write unit tests for all endpoints before resubmitting.</div>
+        </div>
+        <div class="card" style="border-color:rgba(16,185,129,.15);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div class="lbadge lb1" style="width:30px;height:30px;font-size:10px;">L1</div>
+              <div><div style="font-size:12px;font-weight:600;color:#fff;">Foundation Level — Attempt #2</div><div style="font-size:10px;color:var(--muted2);">Reviewed by Ravi Kumar · 20 Jun 2024</div></div>
+            </div>
+            <span class="b b-ok">Completed</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+            <div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.15);border-radius:7px;padding:9px;">
+              <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:4px;">👍 Strengths</div>
+              <div style="font-size:11px;color:var(--muted2);">All rework addressed, unit tests added, clean documentation</div>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:9px;">
+              <div style="font-size:10px;font-weight:700;color:var(--muted2);margin-bottom:4px;">🔧 Improvements</div>
+              <div style="font-size:11px;color:var(--muted2);">None — excellent resubmission</div>
+            </div>
+          </div>
+          <div class="rfb">💬 Overall: Great work on addressing all feedback. Clean implementation and solid test coverage. Level completed!</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ EMPLOYEE FLOW ═══════════ -->
+<div id="s-eflow" class="screen flow-pg">
+  <div class="topbar"><div style="font-size:10px;color:var(--muted);">Screen 5</div><div class="tb-t" style="color:var(--cyan);font-size:11px;letter-spacing:.1em;text-transform:uppercase;">Employee Portal — Flow Canvas</div><div style="font-size:10px;color:var(--muted);">LearnTrack</div></div>
+  <div class="flow-body">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;"><div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:3px;">🎓 Employee Portal — Full Flow</div><div style="font-size:11px;color:var(--muted2);">Login → Dashboard → My Levels → Submissions → Feedback History</div></div>
+    <div style="display:flex;justify-content:center;"><div class="fn" style="max-width:380px;width:100%;border-color:rgba(0,200,255,.25);"><div class="fnt">🔐 Login — Employee</div><ul class="fb"><li>Select "Employee" tab · enter email + password</li><li>JWT token issued · redirected to dashboard</li></ul></div></div>
+    <div class="adn">↓</div>
+    <div class="fcols">
+      <div class="fc" style="border-color:rgba(0,200,255,.2);"><div class="ct" style="color:var(--cyan);">📊 Dashboard</div><ul class="fb"><li>4 cards: Levels Completed, Current Level, Review Pending, Rework Required</li><li>L1/L2/L3 progress bars with status badges</li><li>Recent activity feed</li></ul></div>
+      <div class="fc" style="border-color:rgba(124,92,250,.2);"><div class="ct" style="color:var(--purple);">🎓 My Levels</div><ul class="fb"><li>L1 card: completed — shows manager name + feedback</li><li>L2 card: review pending — shows "Waiting for review from Manager: Rajesh Kumar"</li><li>L3: locked until L2 completed</li></ul></div>
+    </div>
+    <div class="fc" style="border-color:rgba(245,158,11,.2);"><div class="ct" style="color:var(--amber);">📁 Submissions — 3 sub-tabs</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:4px;">
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:10px;"><div style="font-size:11px;font-weight:600;color:var(--cyan);margin-bottom:5px;">📤 Project Submission</div><ul class="fb"><li>Project Title</li><li>Project Description</li><li>GitHub URL</li><li>Manager Name dropdown → sets reviewer_id</li><li>Submit button</li></ul></div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:10px;"><div style="font-size:11px;font-weight:600;color:var(--amber);margin-bottom:5px;">📋 Submission History</div><ul class="fb"><li>All versions submitted (v1, v2…)</li><li>Status per version</li><li>Manager name on each</li><li>Resubmit form for rework items</li></ul></div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:10px;"><div style="font-size:11px;font-weight:600;color:var(--purple);margin-bottom:5px;">💬 Feedback History</div><ul class="fb"><li>All manager feedback received</li><li>Strengths + Improvements per attempt</li><li>Overall comment</li><li>Outcome badge (Rework / Completed)</li></ul></div>
+      </div>
+    </div>
+    <div class="lcs"><div style="font-size:12px;font-weight:600;color:#fff;margin-bottom:10px;">Status Lifecycle — No IN_REVIEW state</div>
+      <div class="lcr"><span class="lcp b-ne">NOT_ENROLLED</span><span class="arr">→</span><span class="lcp b-en">ENROLLED</span><span class="arr">→</span><span class="lcp b-ip">IN_PROGRESS</span><span class="arr">→ submit →</span><span class="lcp b-pd">REVIEW_PENDING</span><span class="arr">→ manager reviews →</span><span class="lcp b-ok">COMPLETED</span></div>
+      <div class="lcr" style="margin-top:7px;"><span class="lcp b-pd">REVIEW_PENDING</span><span class="arr">→ rework feedback →</span><span class="lcp b-rw">REWORK_REQUIRED</span><span class="arr">→ resubmit →</span><span class="lcp b-pd">REVIEW_PENDING</span><span style="font-size:10px;color:var(--muted);margin-left:5px;">(repeats)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ MANAGER DASHBOARD ═══════════ -->
+<div id="s-mdash" class="screen app-shell">
+  <aside class="sidebar">
+    <div class="s-logo"><div class="s-li">🎓</div><div><div class="s-lt">LearnTrack</div><div class="s-ls">ProductSquads</div></div></div>
+    <div class="s-sec">Manager</div>
+    <div class="s-nav">
+      <button class="sn act-m" onclick="go('mdash')"><span>📊</span>Dashboard</button>
+      <button class="sn" onclick="go('mrevs')"><span>📋</span>Reviews</button>
+      <button class="sn" onclick="go('memps')"><span>👥</span>Employees</button>
+      <button class="sn" onclick="go('mrep')"><span>📈</span>Reports</button>
+    </div>
+    <div class="s-user"><div class="u-av" style="background:linear-gradient(135deg,var(--purple),#A855F7);">RK</div><div><div class="u-nm">Rajesh Kumar</div><div class="u-rl">Manager</div></div><button class="u-out" onclick="go('login')">↩</button></div>
+  </aside>
+  <div class="main">
+    <div class="topbar"><div class="tb-t">Dashboard</div><div class="tb-r"><span class="tb-badge tb-m">Manager</span></div></div>
+    <div class="page-inner">
+      <div style="margin-bottom:20px;"><div class="ph">Welcome, Rajesh! 👔</div><div style="font-size:12px;color:var(--muted2);">Review pending submissions and track team progress</div></div>
+      <div class="sg">
+        <div class="sc"><div><div class="sl">Pending Reviews</div><div class="sv">3</div></div><div class="si ia">🕐</div></div>
+        <div class="sc"><div><div class="sl">Completed Today</div><div class="sv">2</div></div><div class="si ig">✅</div></div>
+        <div class="sc"><div><div class="sl">Rework Sent</div><div class="sv">1</div></div><div class="si ir">↩</div></div>
+        <div class="sc"><div><div class="sl">Total Reviewed</div><div class="sv">18</div></div><div class="si ip">📋</div></div>
+      </div>
+      <div class="card">
+        <div class="ct">🔔 Recent Activity</div>
+        <div class="ul">
+          <div class="ur"><div class="ura ia">🕐</div><div style="flex:1;"><div class="urn">John Doe — L2 review request received</div><div class="urs">Submission v1 · Employee-selected manager: Rajesh Kumar</div><div class="urt">2 hours ago</div></div><span class="b b-pd">Review Pending</span></div>
+          <div class="ur"><div class="ura ig">✅</div><div style="flex:1;"><div class="urn">Jane Smith — L3 approved</div><div class="urs">Review #1 · Outcome: COMPLETED</div><div class="urt">1 day ago</div></div><span class="b b-ok">Completed</span></div>
+          <div class="ur"><div class="ura ir">↩</div><div style="flex:1;"><div class="urn">Sarah Park — L2 rework requested</div><div class="urs">Review #2 · Fix auth middleware + add integration tests</div><div class="urt">2 days ago</div></div><span class="b b-rw">Rework Required</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ MANAGER REVIEWS (Pending + Completed sub-tabs) ═══════════ -->
+<div id="s-mrevs" class="screen app-shell">
+  <aside class="sidebar">
+    <div class="s-logo"><div class="s-li">🎓</div><div><div class="s-lt">LearnTrack</div><div class="s-ls">ProductSquads</div></div></div>
+    <div class="s-sec">Manager</div>
+    <div class="s-nav">
+      <button class="sn" onclick="go('mdash')"><span>📊</span>Dashboard</button>
+      <button class="sn act-m" onclick="go('mrevs')"><span>📋</span>Reviews</button>
+      <button class="sn" onclick="go('memps')"><span>👥</span>Employees</button>
+      <button class="sn" onclick="go('mrep')"><span>📈</span>Reports</button>
+    </div>
+    <div class="s-user"><div class="u-av" style="background:linear-gradient(135deg,var(--purple),#A855F7);">RK</div><div><div class="u-nm">Rajesh Kumar</div><div class="u-rl">Manager</div></div><button class="u-out" onclick="go('login')">↩</button></div>
+  </aside>
+  <div class="main">
+    <div class="topbar"><div class="tb-t">Reviews</div><div class="tb-r"><span class="tb-badge tb-m">Manager</span></div></div>
+    <div class="page-inner">
+      <div class="ph">Reviews</div>
+      <div class="ps">Employees who selected you as their reviewer</div>
+      <div class="stabs">
+        <button class="stab act-m" id="rstab1" onclick="showRevTab(1)">🕐 Pending Reviews <span style="background:rgba(245,158,11,.2);color:var(--amber);padding:1px 6px;border-radius:4px;font-size:10px;margin-left:4px;">3</span></button>
+        <button class="stab" id="rstab2" onclick="showRevTab(2)">✅ Completed Reviews</button>
+      </div>
+
+      <!-- PENDING REVIEWS -->
+      <div id="revtab1">
+        <div class="qc">
+          <div class="qch">
+            <div><div style="font-size:13px;font-weight:600;color:#fff;">John Doe — L2 Intermediate</div><div style="font-size:10px;color:var(--muted2);">EMP001 · Engineering · Submitted 24 Jun 2024 · Review #1</div></div>
+            <span class="b b-pd">Pending</span>
+          </div>
+          <div class="qcb">
+            <div class="qmeta"><span>📋 Submission v1</span><span>🔄 First attempt</span><span>📅 24 Jun</span></div>
+            <div class="ghr">🔗 github.com/johndoe/l2-advanced-project <span style="margin-left:auto;font-size:10px;opacity:.7;">↗ Open</span></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+              <div><label class="fl">👍 Strengths</label><textarea class="fbtx" placeholder="What did the employee do well?"></textarea></div>
+              <div><label class="fl">🔧 Improvements</label><textarea class="fbtx" placeholder="What needs improvement?"></textarea></div>
+            </div>
+            <label class="fl">💬 Overall Feedback</label>
+            <textarea class="fbtx" style="min-height:60px;" placeholder="Write your overall review comment…"></textarea>
+            <div style="display:flex;gap:9px;margin-top:4px;">
+              <button class="btn btn-g" style="flex:1;padding:10px;">✅ Approve — Mark Completed</button>
+              <button class="btn btn-r" style="flex:1;padding:10px;">↩ Request Rework</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="qc">
+          <div class="qch">
+            <div><div style="font-size:13px;font-weight:600;color:#fff;">Alex Brown — L1 Foundation</div><div style="font-size:10px;color:var(--muted2);">EMP005 · Engineering · Submitted 23 Jun 2024 · Review #1</div></div>
+            <span class="b b-pd">Pending</span>
+          </div>
+          <div class="qcb">
+            <div class="qmeta"><span>📋 Submission v1</span><span>🔄 First attempt</span><span>📅 23 Jun</span></div>
+            <div class="ghr">🔗 github.com/alexb/l1-foundation <span style="margin-left:auto;font-size:10px;opacity:.7;">↗ Open</span></div>
+            <div style="display:flex;gap:9px;">
+              <button class="btn btn-g" style="flex:1;padding:10px;">✅ Approve</button>
+              <button class="btn btn-r" style="flex:1;padding:10px;">↩ Request Rework</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="qc" style="border-color:rgba(239,68,68,.18);">
+          <div class="qch" style="background:rgba(239,68,68,.05);">
+            <div><div style="font-size:13px;font-weight:600;color:#fff;">Sarah Park — L2 Intermediate</div><div style="font-size:10px;color:var(--muted2);">EMP004 · Product · Resubmitted 22 Jun · Review #3</div></div>
+            <div style="display:flex;align-items:center;gap:7px;"><span class="b b-pd">Pending</span><span style="font-size:10px;color:var(--amber);font-weight:600;">3rd attempt</span></div>
+          </div>
+          <div class="qcb">
+            <div class="qmeta"><span>📋 Submission v3</span><span>🔄 Attempt #3</span><span>📅 22 Jun</span></div>
+            <div class="ghr">🔗 github.com/sarahpark/l2-rework-v3 <span style="margin-left:auto;font-size:10px;opacity:.7;">↗ Open</span></div>
+            <div class="rfb" style="margin-bottom:10px;">📝 Your previous feedback (Review #2): Fix the auth middleware and add integration tests for all API endpoints.</div>
+            <div style="display:flex;gap:9px;">
+              <button class="btn btn-g" style="flex:1;padding:10px;">✅ Approve</button>
+              <button class="btn btn-r" style="flex:1;padding:10px;">↩ Request Rework</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMPLETED REVIEWS -->
+      <div id="revtab2" style="display:none;">
+        <div class="qc" style="border-color:rgba(16,185,129,.15);">
+          <div class="qch" style="background:rgba(16,185,129,.05);">
+            <div><div style="font-size:13px;font-weight:600;color:#fff;">Jane Smith — L3 Advanced</div><div style="font-size:10px;color:var(--muted2);">EMP002 · Engineering · Completed 22 Jun 2024 · Review #1</div></div>
+            <span class="b b-ok">Completed</span>
+          </div>
+          <div class="qcb">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;font-size:11px;">
+              <div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.15);border-radius:6px;padding:8px;"><div style="color:var(--green);font-weight:600;margin-bottom:2px;">👍 Strengths</div><div style="color:var(--muted2);">Outstanding architecture, clean patterns, excellent docs</div></div>
+              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px;"><div style="color:var(--muted2);font-weight:600;margin-bottom:2px;">🔧 Improvements</div><div style="color:var(--muted2);">None — exceptional work</div></div>
+            </div>
+            <div class="rfb">💬 Overall: Outstanding implementation across the board. Well-designed architecture and solid test coverage. Level completed!</div>
+          </div>
+        </div>
+        <div class="qc" style="border-color:rgba(239,68,68,.12);">
+          <div class="qch" style="background:rgba(239,68,68,.04);">
+            <div><div style="font-size:13px;font-weight:600;color:#fff;">Sarah Park — L2 Intermediate</div><div style="font-size:10px;color:var(--muted2);">EMP004 · Product · Review #2 · 18 Jun 2024</div></div>
+            <span class="b b-rw">Rework Required</span>
+          </div>
+          <div class="qcb">
+            <div class="rfb">💬 Please fix the authentication middleware and add integration tests for all API endpoints before resubmitting.</div>
+          </div>
+        </div>
+        <div class="qc" style="border-color:rgba(16,185,129,.15);">
+          <div class="qch" style="background:rgba(16,185,129,.05);">
+            <div><div style="font-size:13px;font-weight:600;color:#fff;">Mike Chen — L2 Intermediate</div><div style="font-size:10px;color:var(--muted2);">EMP003 · Design · Completed 15 Jun 2024 · Review #1</div></div>
+            <span class="b b-ok">Completed</span>
+          </div>
+          <div class="qcb">
+            <div class="rfb">💬 Clean implementation with excellent async patterns and solid documentation. Great work!</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ EMPLOYEES ═══════════ -->
+<div id="s-memps" class="screen app-shell">
+  <aside class="sidebar">
+    <div class="s-logo"><div class="s-li">🎓</div><div><div class="s-lt">LearnTrack</div><div class="s-ls">ProductSquads</div></div></div>
+    <div class="s-sec">Manager</div>
+    <div class="s-nav">
+      <button class="sn" onclick="go('mdash')"><span>📊</span>Dashboard</button>
+      <button class="sn" onclick="go('mrevs')"><span>📋</span>Reviews</button>
+      <button class="sn act-m" onclick="go('memps')"><span>👥</span>Employees</button>
+      <button class="sn" onclick="go('mrep')"><span>📈</span>Reports</button>
+    </div>
+    <div class="s-user"><div class="u-av" style="background:linear-gradient(135deg,var(--purple),#A855F7);">RK</div><div><div class="u-nm">Rajesh Kumar</div><div class="u-rl">Manager</div></div><button class="u-out" onclick="go('login')">↩</button></div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="tb-t">Employees</div>
+      <div class="tb-r">
+        <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:7px;padding:5px 11px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;">🔍 Search by name, email, ID…</div>
+        <span class="tb-badge tb-m">Manager</span>
+      </div>
+    </div>
+    <div class="page-inner">
+      <div class="ph">All Employees</div>
+      <div class="ps">View team progress across L1 · L2 · L3</div>
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div class="tw">
+          <table>
+            <thead><tr><th>Employee</th><th>ID</th><th>Department</th><th>L1</th><th>L2</th><th>L3</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><div class="td-n"><div class="tav" style="background:#06B6D4;">J</div><div><div>John Doe</div><div class="tem">john@company.com</div></div></div></td>
+                <td style="color:var(--muted2);">EMP001</td><td style="color:var(--muted2);">Engineering</td>
+                <td><span class="b b-ok">Completed</span></td><td><span class="b b-pd">Review Pending</span></td><td><span class="b b-ne">Not Enrolled</span></td>
+                <td><span class="b b-pd">Review Pending</span></td>
+              </tr>
+              <tr>
+                <td><div class="td-n"><div class="tav" style="background:#10B981;">J</div><div><div>Jane Smith</div><div class="tem">jane@company.com</div></div></div></td>
+                <td style="color:var(--muted2);">EMP002</td><td style="color:var(--muted2);">Engineering</td>
+                <td><span class="b b-ok">Completed</span></td><td><span class="b b-ok">Completed</span></td><td><span class="b b-ip">In Progress</span></td>
+                <td><span class="b b-ip">In Progress</span></td>
+              </tr>
+              <tr>
+                <td><div class="td-n"><div class="tav" style="background:#0EA5E9;">M</div><div><div>Mike Chen</div><div class="tem">mike@company.com</div></div></div></td>
+                <td style="color:var(--muted2);">EMP003</td><td style="color:var(--muted2);">Design</td>
+                <td><span class="b b-ok">Completed</span></td><td><span class="b b-ok">Completed</span></td><td><span class="b b-ne">Not Enrolled</span></td>
+                <td><span class="b b-ok">Completed</span></td>
+              </tr>
+              <tr>
+                <td><div class="td-n"><div class="tav" style="background:#8B5CF6;">S</div><div><div>Sarah Park</div><div class="tem">sarah@company.com</div></div></div></td>
+                <td style="color:var(--muted2);">EMP004</td><td style="color:var(--muted2);">Product</td>
+                <td><span class="b b-ok">Completed</span></td><td><span class="b b-rw">Rework Required</span></td><td><span class="b b-ne">Not Enrolled</span></td>
+                <td><span class="b b-rw">Rework Required</span></td>
+              </tr>
+              <tr>
+                <td><div class="td-n"><div class="tav" style="background:#F59E0B;">A</div><div><div>Alex Brown</div><div class="tem">alex@company.com</div></div></div></td>
+                <td style="color:var(--muted2);">EMP005</td><td style="color:var(--muted2);">Engineering</td>
+                <td><span class="b b-pd">Review Pending</span></td><td><span class="b b-ne">Not Enrolled</span></td><td><span class="b b-ne">Not Enrolled</span></td>
+                <td><span class="b b-pd">Review Pending</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ REPORTS ═══════════ -->
+<div id="s-mrep" class="screen app-shell">
+  <aside class="sidebar">
+    <div class="s-logo"><div class="s-li">🎓</div><div><div class="s-lt">LearnTrack</div><div class="s-ls">ProductSquads</div></div></div>
+    <div class="s-sec">Manager</div>
+    <div class="s-nav">
+      <button class="sn" onclick="go('mdash')"><span>📊</span>Dashboard</button>
+      <button class="sn" onclick="go('mrevs')"><span>📋</span>Reviews</button>
+      <button class="sn" onclick="go('memps')"><span>👥</span>Employees</button>
+      <button class="sn act-m" onclick="go('mrep')"><span>📈</span>Reports</button>
+    </div>
+    <div class="s-user"><div class="u-av" style="background:linear-gradient(135deg,var(--purple),#A855F7);">RK</div><div><div class="u-nm">Rajesh Kumar</div><div class="u-rl">Manager</div></div><button class="u-out" onclick="go('login')">↩</button></div>
+  </aside>
+  <div class="main">
+    <div class="topbar"><div class="tb-t">Reports</div><div class="tb-r"><span class="tb-badge tb-m">Manager</span></div></div>
+    <div class="page-inner">
+      <div class="ph">Reports</div>
+      <div class="ps">Team progress overview across all levels</div>
+      <div class="sg">
+        <div class="sc"><div><div class="sl">Total Employees</div><div class="sv">5</div></div><div class="si ic">👥</div></div>
+        <div class="sc"><div><div class="sl">L1 Completed</div><div class="sv">4</div></div><div class="si ig">✅</div></div>
+        <div class="sc"><div><div class="sl">L2 Completed</div><div class="sv">2</div></div><div class="si ig">✅</div></div>
+        <div class="sc"><div><div class="sl">L3 Completed</div><div class="sv">0</div></div><div class="si ig">✅</div></div>
+        <div class="sc"><div><div class="sl">Review Pending</div><div class="sv">3</div></div><div class="si ia">🕐</div></div>
+        <div class="sc"><div><div class="sl">Rework Required</div><div class="sv">1</div></div><div class="si ir">↩</div></div>
+      </div>
+      <div class="repg">
+        <div class="cha">
+          <div class="ct">Level Progress Distribution</div>
+          <div class="bch">
+            <div class="bg2"><div style="display:flex;align-items:flex-end;gap:3px;height:130px;"><div class="bc2" style="height:104px;background:#10B981;"></div><div class="bc2" style="height:26px;background:#F59E0B;"></div></div><div class="bl">L1</div></div>
+            <div class="bg2"><div style="display:flex;align-items:flex-end;gap:3px;height:130px;"><div class="bc2" style="height:52px;background:#10B981;"></div><div class="bc2" style="height:26px;background:#F59E0B;"></div><div class="bc2" style="height:26px;background:#EF4444;"></div></div><div class="bl">L2</div></div>
+            <div class="bg2"><div style="display:flex;align-items:flex-end;gap:3px;height:130px;"><div class="bc2" style="height:26px;background:#00C8FF;"></div></div><div class="bl">L3</div></div>
+          </div>
+          <div class="cleg">
+            <span class="cli"><span class="cld" style="background:#10B981;"></span>Completed</span>
+            <span class="cli"><span class="cld" style="background:#00C8FF;"></span>In Progress</span>
+            <span class="cli"><span class="cld" style="background:#F59E0B;"></span>Review Pending</span>
+            <span class="cli"><span class="cld" style="background:#EF4444;"></span>Rework Required</span>
+          </div>
+        </div>
+        <div class="detc">
+          <div class="ct">Completion Details</div>
+          <div class="dlev">
+            <div class="dlh"><div class="dln">L1</div><span style="font-size:10px;color:var(--cyan);">5 enrolled</span></div>
+            <div class="dlr"><div class="dll">Completed</div><div class="dlbw"><div class="dlb" style="width:80%;background:var(--green);"></div></div><div style="font-size:10px;color:var(--muted2);width:14px;text-align:right;">4</div></div>
+            <div class="dlr"><div class="dll">Review Pending</div><div class="dlbw"><div class="dlb" style="width:20%;background:var(--amber);"></div></div><div style="font-size:10px;color:var(--muted2);width:14px;text-align:right;">1</div></div>
+          </div>
+          <div class="divl"></div>
+          <div class="dlev">
+            <div class="dlh"><div class="dln">L2</div><span style="font-size:10px;color:var(--cyan);">4 enrolled</span></div>
+            <div class="dlr"><div class="dll">Completed</div><div class="dlbw"><div class="dlb" style="width:50%;background:var(--green);"></div></div><div style="font-size:10px;color:var(--muted2);width:14px;text-align:right;">2</div></div>
+            <div class="dlr"><div class="dll">Review Pending</div><div class="dlbw"><div class="dlb" style="width:25%;background:var(--amber);"></div></div><div style="font-size:10px;color:var(--muted2);width:14px;text-align:right;">1</div></div>
+            <div class="dlr"><div class="dll">Rework Required</div><div class="dlbw"><div class="dlb" style="width:25%;background:var(--red);"></div></div><div style="font-size:10px;color:var(--muted2);width:14px;text-align:right;">1</div></div>
+          </div>
+          <div class="divl"></div>
+          <div class="dlev">
+            <div class="dlh"><div class="dln">L3</div><span style="font-size:10px;color:var(--cyan);">1 enrolled</span></div>
+            <div class="dlr"><div class="dll">In Progress</div><div class="dlbw"><div class="dlb" style="width:100%;background:var(--cyan);"></div></div><div style="font-size:10px;color:var(--muted2);width:14px;text-align:right;">1</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ MANAGER FLOW ═══════════ -->
+<div id="s-mflow" class="screen flow-pg">
+  <div class="topbar"><div style="font-size:10px;color:var(--muted);">Screen 14</div><div class="tb-t" style="color:var(--purple);font-size:11px;letter-spacing:.1em;text-transform:uppercase;">Manager Portal — Flow Canvas</div><div style="font-size:10px;color:var(--muted);">LearnTrack</div></div>
+  <div class="flow-body">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;"><div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:3px;">👔 Manager Portal — Full Flow</div><div style="font-size:11px;color:var(--muted2);">Login → Dashboard → Pending Reviews → Open → Feedback → Completed Reviews</div></div>
+    <div style="display:flex;justify-content:center;"><div class="fn" style="max-width:380px;width:100%;border-color:rgba(124,92,250,.3);"><div class="fnt" style="color:var(--purple);">🔐 Login — Manager</div><ul class="fb fbm"><li>Select "Manager" tab · role = MANAGER in JWT</li><li>Redirected to Manager Dashboard on login</li></ul></div></div>
+    <div class="adn">↓</div>
+    <div class="fcols">
+      <div class="fc" style="border-color:rgba(124,92,250,.2);"><div class="ct" style="color:var(--purple);">📊 Dashboard</div><ul class="fb fbm"><li>4 cards: Pending Reviews, Completed Today, Rework Sent, Total Reviewed</li><li>Recent activity: new review requests, completions, reworks</li></ul></div>
+      <div class="fc" style="border-color:rgba(245,158,11,.2);"><div class="ct" style="color:var(--amber);">📋 Reviews — 2 sub-tabs</div><ul class="fb fbm"><li>Pending Reviews: employees who chose this manager · form per card</li><li>Completed Reviews: full history of approved + rework outcomes</li></ul></div>
+    </div>
+    <div class="lcs"><div style="font-size:12px;font-weight:600;color:#fff;margin-bottom:12px;">Review Flow — Employee selects manager, no auto-assignment</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:7px;padding:7px 12px;font-size:11px;color:var(--text);">1. Employee submits project</div>
+          <span class="arr">→</span>
+          <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:7px;padding:7px 12px;font-size:11px;color:var(--text);">2. Employee selects manager name</div>
+          <span class="arr">→</span>
+          <div style="background:var(--bg3);border:1px solid rgba(124,92,250,.3);border-radius:7px;padding:7px 12px;font-size:11px;color:var(--purple);">3. Manager receives review request</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <div style="background:var(--bg3);border:1px solid rgba(124,92,250,.3);border-radius:7px;padding:7px 12px;font-size:11px;color:var(--purple);">4. Manager opens GitHub repository</div>
+          <span class="arr">→</span>
+          <div style="background:var(--bg3);border:1px solid rgba(124,92,250,.3);border-radius:7px;padding:7px 12px;font-size:11px;color:var(--purple);">5. Manager fills strengths + improvements + overall feedback</div>
+          <span class="arr">→</span>
+          <div style="background:var(--bg3);border:1px solid rgba(124,92,250,.3);border-radius:7px;padding:7px 12px;font-size:11px;color:var(--purple);">6. Decision</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px;">
+          <span class="arr" style="margin-left:24px;">✅ Approve →</span><span class="lcp b-ok">COMPLETED</span>
+          <span style="color:var(--muted);font-size:11px;margin:0 8px;">|</span>
+          <span class="arr">↩ Request Rework →</span><span class="lcp b-rw">REWORK_REQUIRED</span><span class="arr">→ employee resubmits →</span><span class="lcp b-pd">REVIEW_PENDING</span>
+        </div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:10px;color:var(--muted2);">
+        <strong style="color:var(--purple);">Statuses:</strong> NOT_ENROLLED · ENROLLED · IN_PROGRESS · REVIEW_PENDING · REWORK_REQUIRED · COMPLETED &nbsp;—&nbsp; <strong style="color:var(--red);">No IN_REVIEW state.</strong>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:11px;color:var(--muted);padding-top:8px;">Designed by <strong style="color:var(--cyan);">Pradeep Kamma</strong> · LearnTrack — ProductSquads · React · FastAPI · MongoDB</div>
+  </div>
+</div>
+
+<script>
+const MAP={cover:'s-cover',login:'s-login',edash:'s-edash',elevels:'s-elevels',esubs:'s-esubs',eflow:'s-eflow',mdash:'s-mdash',mrevs:'s-mrevs',memps:'s-memps',mrep:'s-mrep',mflow:'s-mflow'};
+
+function go(key){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(MAP[key]);
+  if(el){el.classList.add('active');el.scrollTop=0;}
+  document.querySelectorAll('.pn-btn').forEach(b=>{
+    const oc=b.getAttribute('onclick')||'';
+    b.classList.remove('active','active-m');
+    if(oc.includes("'"+key+"'")){
+      const isMgr=['mdash','mrevs','memps','mrep','mflow'].includes(key);
+      b.classList.add(isMgr?'active-m':'active');
+    }
+  });
+}
+
+function switchRole(role){
+  document.getElementById('tab-emp').className='role-tab'+(role==='emp'?' act-e':'');
+  document.getElementById('tab-mgr').className='role-tab'+(role==='mgr'?' act-m':'');
+  if(role==='emp'){
+    document.getElementById('login-title').textContent='Welcome back';
+    document.getElementById('login-sub').textContent='Sign in as an Employee to track your level progress';
+    document.getElementById('login-btn').className='bsi-e';
+    document.getElementById('login-btn').textContent='Sign In as Employee →';
+    document.getElementById('login-btn').onclick=()=>go('edash');
+  } else {
+    document.getElementById('login-title').textContent='Manager Portal';
+    document.getElementById('login-sub').textContent='Sign in to manage reviews and track your team';
+    document.getElementById('login-btn').className='bsi-m';
+    document.getElementById('login-btn').textContent='Sign In as Manager →';
+    document.getElementById('login-btn').onclick=()=>go('mdash');
+  }
+}
+
+function showSubTab(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('subtab'+i).style.display=i===n?'block':'none';
+    const b=document.getElementById('stab'+i);
+    b.className='stab'+(i===n?' act-e':'');
+  });
+}
+
+function showRevTab(n){
+  [1,2].forEach(i=>{
+    document.getElementById('revtab'+i).style.display=i===n?'block':'none';
+    const b=document.getElementById('rstab'+i);
+    b.className='stab'+(i===n?' act-m':'');
+  });
+}
+
+go('cover');
+</script>
+</body>
+</html>
